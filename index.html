@@ -8,10 +8,7 @@
   <!-- iOS PWA meta -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
-  <!-- Theme color (used by some platforms) -->
   <meta name="theme-color" content="#1aa34a">
-
   <link rel="manifest" href="manifest.json">
 
   <style>
@@ -21,34 +18,42 @@
 
     .app{min-height:100vh;display:flex;flex-direction:column;background:#fff;}
 
-    /* TOP: background image area (fits to top, covers ~50% of viewport) */
-    .background{position:relative;height:52vh;width:100%;overflow:hidden;}
-    /* the image itself is positioned so the bottom seam remains visible */
-    .background img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
-    /* ensure the image extends under the status bar on iOS standalone */
-    .background::before{content:'';display:block;height:var(--safe-top);width:100%;position:absolute;top:0;left:0;}
+    /* TOP background area */
+    .background{position:relative;height:56vh;width:100%;overflow:hidden;}
+    .background img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;object-position:center -2vh;display:block;}
+    /* extend image under status bar */
+    .background::before{content:'';position:absolute;top:0;left:0;width:100%;height:var(--safe-top);}
 
     /* WHITE CARD */
-    .card{position:relative;width:100%;background:#fff;border-top-left-radius:12px;border-top-right-radius:12px;
-          margin-top:-28px; /* small overlap so the tilted seam from the background remains visible */
-          padding:22px 20px 32px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;}
+    .card{
+      position:relative;width:100%;background:#fff;
+      margin-top:-12px; /* small overlap so the tilted seam remains visible */
+      border-top-left-radius:28px;border-top-right-radius:28px;
+      box-shadow:0 -1px 0 rgba(0,0,0,.04) inset;
+      padding:22px 20px calc(32px + var(--safe-bottom));
+      box-sizing:border-box;display:flex;flex-direction:column;align-items:center;
+    }
 
-    /* make sure the card includes safe-area on the bottom on iPhones with home indicator */
-    .card{padding-bottom:calc(32px + var(--safe-bottom));}
+    /* PROFILE PICTURE */
+    .profile-pic{
+      width:136px;height:136px;border-radius:50%;
+      object-fit:cover;margin-top:16px;
+      border:1px solid #E8EAF0;box-shadow:0 4px 20px rgba(0,0,0,.08);background:#fff;
+    }
 
-    /* PROFILE PICTURE - larger than before */
-    .profile-pic{width:120px;height:120px;border-radius:50%;object-fit:cover;margin-top:-52px; /* pull it up so it visually sits on the seam */ box-shadow:0 6px 18px rgba(0,0,0,0.06);background:#fff;}
+    .name{font-size:22px;font-weight:700;letter-spacing:.2px;margin:12px 0 10px;text-align:center;}
+    .subtitle{font-size:16px;color:#6E6E73;margin:0 0 8px;text-align:center;line-height:1.25;}
 
-    .name{font-size:20px;font-weight:700;margin-top:14px;margin-bottom:6px;text-align:center;}
-    .subtitle{font-size:15px;color:#6c6c6c;margin:0;text-align:center;line-height:1.2;}
+    /* Spacer pushes button to bottom */
+    .spacer{flex:1;}
 
-    /* Button area - pushed to near the bottom */
-    .button-wrapper{width:100%;display:flex;justify-content:center;margin-top:18px;}
-    .back-btn{display:inline-block;width:76%;max-width:420px;padding:14px 20px;border-radius:12px;background:#3f48ff;color:#fff;text-decoration:none;
-              text-align:center;font-size:18px;box-shadow:0 6px 18px rgba(63,72,255,0.12);}
-
-    /* small screens adjustments */
-    @media (min-width:420px){ .profile-pic{width:120px;height:120px;} .name{font-size:20px;} .subtitle{font-size:15px;} }
+    /* Button area */
+    .button-wrapper{width:100%;display:flex;justify-content:center;}
+    .back-btn{
+      display:inline-block;width:86%;max-width:520px;height:56px;line-height:56px;
+      border-radius:28px;background:#3f48ff;color:#fff;text-decoration:none;
+      text-align:center;font-size:20px;box-shadow:0 10px 24px rgba(63,72,255,.25);
+    }
   </style>
 </head>
 <body>
@@ -60,7 +65,9 @@
     <div class="card">
       <img class="profile-pic" src="https://raw.githubusercontent.com/idaniar-web/gymlib/main/profile_pic.png" alt="Profile">
       <div class="name">Daniar Ibraimov</div>
-      <div class="subtitle" id="subtitle">RITM Saint Germain – </div>
+      <div class="subtitle" id="subtitle">RITM Saint-Germain – </div>
+
+      <div class="spacer"></div>
 
       <div class="button-wrapper">
         <a class="back-btn" href="#" role="button" aria-disabled="true">Back</a>
@@ -74,12 +81,11 @@
       const options = { day: '2-digit', month: 'long', year: 'numeric' };
       const date = now.toLocaleDateString('en-GB', options);
       const time = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
-      document.getElementById('subtitle').textContent = `RITM Saint Germain – ${date} ${time}`;
+      document.getElementById('subtitle').textContent = `RITM Saint-Germain – ${date} ${time}`;
     }
     updateDateTime();
     setInterval(updateDateTime, 1000);
 
-    // suggestion: on first load try to register service worker quietly (optional)
     if ('serviceWorker' in navigator){
       navigator.serviceWorker.register('service-worker.js').catch(()=>{});
     }
