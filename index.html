@@ -10,11 +10,12 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="theme-color" content="#1aa34a">
   <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/idaniar-web/gymlib/main/wellpass.png"/>
 
   <style>
     :root { --safe-top: env(safe-area-inset-top); --safe-bottom: env(safe-area-inset-bottom); }
     html,body{height:100%;margin:0;padding:0;background:#fff;-webkit-font-smoothing:antialiased;}
-    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#111;}
+    body{font-family:"SF Pro Display","SF Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#111;}
 
     .app{min-height:100vh;display:flex;flex-direction:column;background:#fff;}
 
@@ -29,35 +30,29 @@
       margin-top:-12px;
       border-top-left-radius:28px;border-top-right-radius:28px;
       box-shadow:0 -1px 0 rgba(0,0,0,.04) inset;
-      padding:22px 20px calc(84px + var(--safe-bottom)); /* extra space reserved for fixed button */
+      padding:22px 20px calc(90px + var(--safe-bottom)); /* space reserved for fixed button */
       box-sizing:border-box;display:flex;flex-direction:column;align-items:center;
     }
 
-    /* PROFILE PICTURE (move up a bit) */
+    /* PROFILE PICTURE and NAME (moved a bit up) */
     .profile-pic{
       width:136px;height:136px;border-radius:50%;
-      object-fit:cover;margin-top:0;
-      transform:translateY(-10px);
+      object-fit:cover;transform:translateY(-16px);
       border:1px solid #E8EAF0;box-shadow:0 4px 20px rgba(0,0,0,.08);background:#fff;
     }
+    .name{font-size:20px;font-weight:700;letter-spacing:.2px;margin:0 0 6px;text-align:center;transform:translateY(-10px);}
 
-    /* NAME (slightly smaller, moved up; don't touch subtitle position) */
-    .name{font-size:21px;font-weight:700;letter-spacing:.2px;margin:2px 0 18px;text-align:center;}
-
-    /* SUBTITLE — keep vertical position feel, just bump font a bit */
-    .subtitle{font-size:17px;color:#6E6E73;margin:0 0 8px;text-align:center;line-height:1.25;}
-
-    /* Spacer to allow some flexible space, subtitle should stay put visually */
-    .spacer{flex:1;}
+    /* SUBTITLE — slightly larger font, nudged down ~0.5 line */
+    .subtitle{font-size:19px;color:#6E6E73;margin:8px 0 0;text-align:center;line-height:1.3;}
 
     /* Fixed button pinned to the very bottom, full-width container */
     .button-wrapper{
       position:fixed;left:0;right:0;
-      bottom:calc(8px + var(--safe-bottom)); /* sit right above home indicator */
-      display:flex;justify-content:center;pointer-events:none; /* container ignores clicks */
+      bottom:calc(8px + var(--safe-bottom)); /* right above home indicator */
+      display:flex;justify-content:center;pointer-events:none;
     }
     .back-btn{
-      pointer-events:auto; /* button is clickable if needed in future */
+      pointer-events:auto;
       display:inline-block;width:90%;max-width:640px;height:50px;line-height:50px;
       border-radius:25px;background:#3f48ff;color:#fff;text-decoration:none;
       text-align:center;font-size:19px;box-shadow:0 10px 24px rgba(63,72,255,.25);
@@ -74,7 +69,6 @@
       <img class="profile-pic" src="https://raw.githubusercontent.com/idaniar-web/gymlib/main/profile_pic.png" alt="Profile">
       <div class="name">Daniar Ibraimov</div>
       <div class="subtitle" id="subtitle">RITM Saint-Germain – </div>
-      <div class="spacer"></div>
     </div>
   </div>
 

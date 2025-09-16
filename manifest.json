@@ -7,12 +7,12 @@
   "theme_color": "#1aa34a",
   "icons": [
     {
-      "src": "https://raw.githubusercontent.com/idaniar-web/gymlib/main/profile_pic.png",
+      "src": "https://raw.githubusercontent.com/idaniar-web/gymlib/main/wellpass.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "https://raw.githubusercontent.com/idaniar-web/gymlib/main/profile_pic.png",
+      "src": "https://raw.githubusercontent.com/idaniar-web/gymlib/main/wellpass.png",
       "sizes": "512x512",
       "type": "image/png"
     }
