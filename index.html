@@ -21,38 +21,46 @@
     /* TOP background area */
     .background{position:relative;height:56vh;width:100%;overflow:hidden;}
     .background img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;object-position:center -2vh;display:block;}
-    /* extend image under status bar */
-    .background::before{content:'';position:absolute;top:0;left:0;width:100%;height:var(--safe-top);}
+    .background::before{content:'';position:absolute;top:0;left:0;width:100%;height:var(--safe-top);} /* extend under status bar */
 
     /* WHITE CARD */
     .card{
       position:relative;width:100%;background:#fff;
-      margin-top:-12px; /* small overlap so the tilted seam remains visible */
+      margin-top:-12px;
       border-top-left-radius:28px;border-top-right-radius:28px;
       box-shadow:0 -1px 0 rgba(0,0,0,.04) inset;
-      padding:22px 20px calc(32px + var(--safe-bottom));
+      padding:22px 20px calc(84px + var(--safe-bottom)); /* extra space reserved for fixed button */
       box-sizing:border-box;display:flex;flex-direction:column;align-items:center;
     }
 
-    /* PROFILE PICTURE */
+    /* PROFILE PICTURE (move up a bit) */
     .profile-pic{
       width:136px;height:136px;border-radius:50%;
-      object-fit:cover;margin-top:16px;
+      object-fit:cover;margin-top:0;
+      transform:translateY(-10px);
       border:1px solid #E8EAF0;box-shadow:0 4px 20px rgba(0,0,0,.08);background:#fff;
     }
 
-    .name{font-size:22px;font-weight:700;letter-spacing:.2px;margin:12px 0 10px;text-align:center;}
-    .subtitle{font-size:16px;color:#6E6E73;margin:0 0 8px;text-align:center;line-height:1.25;}
+    /* NAME (slightly smaller, moved up; don't touch subtitle position) */
+    .name{font-size:21px;font-weight:700;letter-spacing:.2px;margin:2px 0 18px;text-align:center;}
 
-    /* Spacer pushes button to bottom */
+    /* SUBTITLE — keep vertical position feel, just bump font a bit */
+    .subtitle{font-size:17px;color:#6E6E73;margin:0 0 8px;text-align:center;line-height:1.25;}
+
+    /* Spacer to allow some flexible space, subtitle should stay put visually */
     .spacer{flex:1;}
 
-    /* Button area */
-    .button-wrapper{width:100%;display:flex;justify-content:center;}
+    /* Fixed button pinned to the very bottom, full-width container */
+    .button-wrapper{
+      position:fixed;left:0;right:0;
+      bottom:calc(8px + var(--safe-bottom)); /* sit right above home indicator */
+      display:flex;justify-content:center;pointer-events:none; /* container ignores clicks */
+    }
     .back-btn{
-      display:inline-block;width:86%;max-width:520px;height:56px;line-height:56px;
-      border-radius:28px;background:#3f48ff;color:#fff;text-decoration:none;
-      text-align:center;font-size:20px;box-shadow:0 10px 24px rgba(63,72,255,.25);
+      pointer-events:auto; /* button is clickable if needed in future */
+      display:inline-block;width:90%;max-width:640px;height:50px;line-height:50px;
+      border-radius:25px;background:#3f48ff;color:#fff;text-decoration:none;
+      text-align:center;font-size:19px;box-shadow:0 10px 24px rgba(63,72,255,.25);
     }
   </style>
 </head>
@@ -66,20 +74,20 @@
       <img class="profile-pic" src="https://raw.githubusercontent.com/idaniar-web/gymlib/main/profile_pic.png" alt="Profile">
       <div class="name">Daniar Ibraimov</div>
       <div class="subtitle" id="subtitle">RITM Saint-Germain – </div>
-
       <div class="spacer"></div>
-
-      <div class="button-wrapper">
-        <a class="back-btn" href="#" role="button" aria-disabled="true">Back</a>
-      </div>
     </div>
+  </div>
+
+  <!-- Button lives outside card so it can be truly at the bottom on all screens -->
+  <div class="button-wrapper" aria-hidden="true">
+    <a class="back-btn" href="#" role="button" aria-disabled="true">Back</a>
   </div>
 
   <script>
     function updateDateTime(){
       const now = new Date();
-      const options = { day: '2-digit', month: 'long', year: 'numeric' };
-      const date = now.toLocaleDateString('en-GB', options);
+      // 2-digit day + full month, no year
+      const date = now.toLocaleDateString('en-GB', { day: '2-digit', month: 'long' });
       const time = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
       document.getElementById('subtitle').textContent = `RITM Saint-Germain – ${date} ${time}`;
     }
