@@ -4,11 +4,16 @@
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#3f48ff",
+  "theme_color": "#1aa34a",
   "icons": [
     {
       "src": "https://raw.githubusercontent.com/idaniar-web/gymlib/main/profile_pic.png",
       "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://raw.githubusercontent.com/idaniar-web/gymlib/main/profile_pic.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ]
