@@ -80,13 +80,13 @@
   <script>
     function updateDateTime(){
       const now = new Date();
-      // 2-digit day + full month, no year
       const date = now.toLocaleDateString('en-GB', { day: '2-digit', month: 'long' });
       const time = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
       document.getElementById('subtitle').textContent = `RITM Saint-Germain – ${date} ${time}`;
     }
+
+    // Run only once when the app opens
     updateDateTime();
-    setInterval(updateDateTime, 1000);
 
     if ('serviceWorker' in navigator){
       navigator.serviceWorker.register('service-worker.js').catch(()=>{});
